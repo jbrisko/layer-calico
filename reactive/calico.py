@@ -19,7 +19,6 @@ CALICOCTL_PATH = '/opt/calicoctl'
 ETCD_KEY_PATH = os.path.join(CALICOCTL_PATH, 'etcd-key')
 ETCD_CERT_PATH = os.path.join(CALICOCTL_PATH, 'etcd-cert')
 ETCD_CA_PATH = os.path.join(CALICOCTL_PATH, 'etcd-ca')
-CALICO_CIDR = '192.168.0.0/16'
 
 
 @hook('upgrade-charm')
@@ -161,8 +160,10 @@ def configure_calico_pool(etcd):
     env['ETCD_CERT_FILE'] = ETCD_CERT_PATH
     env['ETCD_CA_CERT_FILE'] = ETCD_CA_PATH
     config = hookenv.config()
+    name = config['calico-cidr'].replace('.', '-').replace('/', '-')
     context = {
-        'cidr': CALICO_CIDR,
+        'name': name
+        'cidr': config['calico-cidr'],
         'ipip': 'true' if config['ipip'] else 'false',
         'nat_outgoing': 'true' if config['nat-outgoing'] else 'false',
     }
@@ -196,7 +197,7 @@ def configure_cni(etcd, cni):
         'kubeconfig_path': cni_config['kubeconfig_path']
     }
     render('10-calico.conflist', '/etc/cni/net.d/10-calico.conflist', context)
-    cni.set_config(cidr=CALICO_CIDR)
+    cni.set_config(cidr=config['calico-cidr'])
     set_state('calico.cni.configured')
 
 
