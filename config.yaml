@@ -2,12 +2,12 @@ options:
   calico-node-image:
     type: string
     # Please refer to layer-canal/versioning.md before changing the version below.
-    default: quay.io/calico/node:v2.6.10
+    default: quay.io/calico/node:v3.1.3
     description: |
       The image id to use for calico/node.
   calico-policy-image:
     type: string
-    default: quay.io/calico/kube-controllers:v1.0.4
+    default: quay.io/calico/kube-controllers:v3.1.3
     description: |
       The image id to use for calico/kube-controllers.
   ipip:
@@ -20,3 +20,8 @@ options:
     default: true
     description: |
       NAT outgoing traffic
+  calico-cidr:
+    type: string
+    default: 10.0.0.0/16
+    description: |
+      What CIDR to send to Calico upon provisioning
