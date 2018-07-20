@@ -1,5 +1,7 @@
 # Calico Charm
 
+This fork is simply to add some options to the configuration within Juju as well as to update the version of Calico
+
 Calico is a new approach to virtual networking and network security for containers,
 VMs, and bare metal services, that provides a rich set of security enforcement
 capabilities running on top of a highly scalable and efficient virtual network fabric.
